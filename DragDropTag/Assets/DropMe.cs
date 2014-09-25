@@ -28,7 +28,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 				if (receivingImage == null)
 					return;
 
-				GameObject dragIcon = Instantiate (dragObject) as GameObject;
+				GameObject dragIcon = Instantiate (data.pointerDrag) as GameObject;
 
 				var canvas = FindInParents<Canvas>(gameObject);
 
