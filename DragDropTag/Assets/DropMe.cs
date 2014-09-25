@@ -10,6 +10,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		private Color normalColor;
 		public Color highlightColor = Color.yellow;
 		public GameObject dragObject;//DropされるべきGameObject
+		public GameObject thisObject;
 
 		public void OnEnable ()
 		{
@@ -19,19 +20,22 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		
 		public void OnDrop(PointerEventData data)
 		{
-			containerImage.color = normalColor;
-			
+		     Debug.Log(data.pointerDrag.tag);
+
+		if(data.pointerDrag.tag == thisObject.tag ){
+				containerImage.color = normalColor;
+				
 			if (receivingImage == null)
 				return;
 
-			GameObject dragIcon = Instantiate (dragObject) as GameObject;
+			GameObject dragIcon = Instantiate (data.pointerDrag) as GameObject;
 
-			var canvas = FindInParents<Canvas>(gameObject);
+				var canvas = FindInParents<Canvas>(gameObject);
 
-			dragIcon.transform.SetParent (canvas.transform, false);
-			dragIcon.transform.SetAsLastSibling();
-			dragIcon.GetComponent<RectTransform> ().position = GetComponent<RectTransform> ().position;
-			
+				dragIcon.transform.SetParent (canvas.transform, false);
+				dragIcon.transform.SetAsLastSibling();
+				dragIcon.GetComponent<RectTransform> ().position = GetComponent<RectTransform> ().position;
+			}
 		}
 
 		public void OnPointerEnter(PointerEventData data)
@@ -41,7 +45,7 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 				return;
 			
 			Sprite dropSprite = GetDropSprite (data);
-			if (dropSprite != null)
+		if (data.pointerDrag.tag == thisObject.tag)
 				containerImage.color = highlightColor;
 		}
 
@@ -55,15 +59,21 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		
 		private Sprite GetDropSprite(PointerEventData data)
 		{
-			var originalObj = data.pointerDrag;
-			if (originalObj == null)
-				return null;
+		if(dragObject.tag == thisObject.tag ){
 
-			var srcImage = originalObj.GetComponent<Image>();
-			if (srcImage == null)
+				var originalObj = data.pointerDrag;
+				if (originalObj == null)
+					return null;
+
+				var srcImage = originalObj.GetComponent<Image>();
+				if (srcImage == null)
+					return null;
+				
+				return srcImage.sprite;
+			}else{
 				return null;
-			
-			return srcImage.sprite;
+			}
+
 		}
 				
 		static public T FindInParents<T>(GameObject go) where T : Component
