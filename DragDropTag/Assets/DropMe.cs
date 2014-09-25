@@ -20,15 +20,15 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		
 		public void OnDrop(PointerEventData data)
 		{
-		     Debug.Log(data.pointerDrag.tag);
+		Debug.Log(data.pointerDrag.tag);
 
-		if(data.pointerDrag.tag == thisObject.tag ){
+			if(data.pointerDrag.tag == thisObject.tag){
 				containerImage.color = normalColor;
 				
-			if (receivingImage == null)
-				return;
+				if (receivingImage == null)
+					return;
 
-			GameObject dragIcon = Instantiate (data.pointerDrag) as GameObject;
+				GameObject dragIcon = Instantiate (dragObject) as GameObject;
 
 				var canvas = FindInParents<Canvas>(gameObject);
 
@@ -45,7 +45,10 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 				return;
 			
 			Sprite dropSprite = GetDropSprite (data);
-		if (data.pointerDrag.tag == thisObject.tag)
+
+		//変更点：if(~&&~)→下記２重文へ
+		   if(dropSprite != null)
+			if (data.pointerDrag.tag == thisObject.tag) 
 				containerImage.color = highlightColor;
 		}
 
@@ -57,25 +60,23 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 			containerImage.color = normalColor;
 		}
 		
-		private Sprite GetDropSprite(PointerEventData data)
-		{
-		if(dragObject.tag == thisObject.tag ){
-
-				var originalObj = data.pointerDrag;
-				if (originalObj == null)
-					return null;
-
-				var srcImage = originalObj.GetComponent<Image>();
-				if (srcImage == null)
-					return null;
-				
-				return srcImage.sprite;
-			}else{
+	private Sprite GetDropSprite(PointerEventData data)
+	{
+			
+			var originalObj = data.pointerDrag;
+			if (originalObj == null)
 				return null;
-			}
+			
+			var srcImage = originalObj.GetComponent<Image>();
+			if (srcImage == null)
+				return null;
+			
+			return srcImage.sprite;
+	
+			return null;
+		
+	}
 
-		}
-				
 		static public T FindInParents<T>(GameObject go) where T : Component
 		//GameObjectの親であり、型がTであるものを探しにいく
 		{
