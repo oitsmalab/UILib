@@ -25,10 +25,10 @@ public class DropMe : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointe
 		if(data.pointerDrag.tag == thisObject.tag ){
 				containerImage.color = normalColor;
 				
-				if (receivingImage == null)
-					return;
+			if (receivingImage == null)
+				return;
 
-				GameObject dragIcon = Instantiate (dragObject) as GameObject;
+			GameObject dragIcon = Instantiate (data.pointerDrag) as GameObject;
 
 				var canvas = FindInParents<Canvas>(gameObject);
 
