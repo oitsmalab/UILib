@@ -29,10 +29,9 @@ public class Moveimage : MonoBehaviour {
 		//clip2.SetCurve ("", typeof(Transform), "localPosition.y", curve);
 		//clip2.SetCurve ("", typeof(Transform), "localPosition.z", curve);
 		curve.keys[0] = new Keyframe (0f,gameObject.transform.position.x);
-		Debug.Log(curve.keys[0]);
-		curve.keys[1]= new Keyframe (2f,p2.x);
+		Keyframe testKey=new Keyframe (2f,p2.x);
+		curve.MoveKey(1,testKey);
 		clip2.SetCurve ("", typeof(Transform), "localPosition.x", curve);
-
 		animation.AddClip (clip2, "moveclip2");
 		animation.Play ("moveclip2");
 	
