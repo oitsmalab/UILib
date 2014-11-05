@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Moveimage : MonoBehaviour {
-	//public float tspeed;
+	public AnimationCurve curve;//初期の２つのキーフレームを初期化および操作
 
 
 	// Use this for initialization
@@ -13,14 +13,29 @@ public class Moveimage : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	if (Input.GetMouseButtonUp (0)) {
-						Debug.Log ("左クリック");//オブジェクト指定するためにマウスのざひょうしゅとくしたい
+						Debug.Log ("左クリック");
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit = new RaycastHit();
 			if(Physics.Raycast (ray,out hit) && gameObject != hit.collider.gameObject){
-				moveAnimation(hit.collider.gameObject.transform.position);
+				moveAnimation2(hit.collider.gameObject.transform.position);
 				Debug.Log ("選択移動");
 			}
 				}
+	}
+
+	void moveAnimation2 (Vector3 p2){
+		AnimationClip clip2 = new AnimationClip ();//
+
+		//clip2.SetCurve ("", typeof(Transform), "localPosition.y", curve);
+		//clip2.SetCurve ("", typeof(Transform), "localPosition.z", curve);
+		curve.keys[0] = new Keyframe (0f,gameObject.transform.position.x);
+		Debug.Log(curve.keys[0]);
+		curve.keys[1]= new Keyframe (2f,p2.x);
+		clip2.SetCurve ("", typeof(Transform), "localPosition.x", curve);
+
+		animation.AddClip (clip2, "moveclip2");
+		animation.Play ("moveclip2");
+	
 	}
 
 	void moveAnimation (Vector3 p) {
