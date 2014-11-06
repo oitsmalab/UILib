@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Moveimage : MonoBehaviour {
 	public AnimationCurve curve;//初期の２つのキーフレームを初期化および操作
-
+	AnimationCurve curve2;
 
 	// Use this for initialization
 	void Start () {
 		GameObject.Find ("GUI Text").guiText.text = "moveAnimation sample";
+		curve2 = new AnimationCurve (curve.keys);
 	}
 	
 	// Update is called once per frame
@@ -30,11 +32,11 @@ public class Moveimage : MonoBehaviour {
 		//clip2.SetCurve ("", typeof(Transform), "localPosition.z", curve);
 		//curve.keys[0] = new Keyframe (0f,gameObject.transform.position.x);
 		Keyframe testKey=new Keyframe (0f,curve.Evaluate (0f)-2);
-		curve.MoveKey(0,testKey);
+		curve2.MoveKey(0,testKey);
 		testKey = curve.keys [1];
 		testKey.value = testKey.value - 2;
-		curve.MoveKey(1,testKey);
-		clip2.SetCurve ("", typeof(Transform), "localPosition.x", curve);
+		curve2.MoveKey(1,testKey);
+		clip2.SetCurve ("", typeof(Transform), "localPosition.x", curve2);
 		animation.AddClip (clip2, "moveclip2");
 		animation.Play ("moveclip2");
 	
