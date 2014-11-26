@@ -8,7 +8,7 @@ public class select2 : MonoBehaviour {
 	public int[] moveAnimationPatterns = new int[4] ;//アニメーションのパターンの順番
 	int countObject = -1;//現在のオブジェクトの位置 始めに０番目の地点へ右キーで移動
 
-	struct Curve{
+	public struct Curve{
 		public float height;//基準の高さ
 		public float[] keyframeValues;//相対高度
 	}
@@ -53,7 +53,7 @@ public class select2 : MonoBehaviour {
 	}
 
 	
-	void GetRelativeHeightsFromAnimationCurvePattern(AnimationCurve[] animationCurvePattern, Curve[] curveArray){
+	public void GetRelativeHeightsFromAnimationCurvePattern(AnimationCurve[] animationCurvePattern, Curve[] curveArray){
 		for (int a=0; a<animationCurvePattern.Length; a++) {
 			curveArray [a].keyframeValues = new float[animationCurvePattern [a].length];
 		}//長さ確定　インスタンス化
