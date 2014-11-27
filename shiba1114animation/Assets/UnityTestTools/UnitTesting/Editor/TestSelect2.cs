@@ -5,8 +5,12 @@ using System.Collections;
 class TestSelect2
 {
 
-	[TestCase(2f, 2f)]
 
+
+
+	public float[] position = {0.3f,0.5f,2.0f};
+
+	[TestCase(2f, 2f)]
 	public void TestGetRelativeHeightsFromAnimationCurvePattern1 (float time, float value)
 	{
 		AnimationCurve[] animationCurvePattern = new AnimationCurve[1];
@@ -16,9 +20,9 @@ class TestSelect2
 		select2.Curve[] curveArray = new select2.Curve[1];
 		
 		select2Ref.GetRelativeHeightsFromAnimationCurvePattern (animationCurvePattern, curveArray);
-
+		
 		Assert.AreEqual(curveArray[0].height,2);
-
+		
 	}
 
 
@@ -29,6 +33,7 @@ class TestSelect2
 		animationCurvePattern[0] =  new AnimationCurve(new Keyframe(0, 0), new Keyframe(time, value), new Keyframe(0.5f,3f) ,new Keyframe(1f, 1f));
 		
 		select2 select2Ref = new select2 ();
+
 		select2.Curve[] curveArray = new select2.Curve[1];
 		
 		select2Ref.GetRelativeHeightsFromAnimationCurvePattern (animationCurvePattern, curveArray);
@@ -36,7 +41,7 @@ class TestSelect2
 		Assert.AreEqual(curveArray[0].keyframeValues,x);
 	}
 
-
+	/*
 	AnimationCurve[] animationCurvePattern2 = new AnimationCurve[1];
 	animationCurvePattern2[0] =  new AnimationCurve(new Keyframe(0, 0), new Keyframe(time, value), new Keyframe(0.5f,3f) ,new Keyframe(1f, 1f));
 	select2.Curve[] curveArray2 = new select2.Curve[1];
@@ -50,6 +55,24 @@ class TestSelect2
 
 
 	}
+*/
 
+/*	[TestCase(position,2)]
+	public void TestMoveAnimation(Vector3 target,int number){
 
+		GameObject gameObject;
+		gameObject.transform.position.x = 0;
+
+		AnimationClip clip = new AnimationClip ();
+		AnimationCurve[] animationCurvePattern = new AnimationCurve[1];
+
+		select2 select2Ref = new select2 ();
+		select2.Curve[] curveArray = new select2.Curve[2];
+
+		AnimationCurve curveX =
+			select2Ref.GetAdjustedAnimationCurve(target.x,gameObject.transform.position.x,animationCurvePattern,number,curveArray);
+
+		Assert.AreEqual(clip.SetCurve("", typeof(Transform), "localPosition.x", curveX) , 1);
+	}
+*/
 }

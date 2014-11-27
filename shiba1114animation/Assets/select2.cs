@@ -94,7 +94,7 @@ public class select2 : MonoBehaviour {
 		
 	}
 
-	AnimationCurve GetAdjustedAnimationCurve(float targetPosition,float transformPosition,AnimationCurve[] animationCurvePattern ,int animationNumber ,Curve[] curveArray){
+	public AnimationCurve GetAdjustedAnimationCurve(float targetPosition,float transformPosition,AnimationCurve[] animationCurvePattern ,int animationNumber ,Curve[] curveArray){
 
 		AnimationCurve curve = new AnimationCurve ();
 			curve.keys = animationCurvePattern[animationNumber].keys;
