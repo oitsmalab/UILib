@@ -70,7 +70,7 @@ public class select2 : MonoBehaviour {
 	}
 
 
-	void moveAnimation3 (Vector3 targetPosition ,int animationNumber){
+	public void moveAnimation3 (Vector3 targetPosition ,int animationNumber){
 		AnimationClip clip3 = new AnimationClip ();
 		Debug.Log("X");
 		AnimationCurve curveX =
