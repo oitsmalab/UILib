@@ -65,7 +65,7 @@ public class select2 : MonoBehaviour {
 			for (int i=1; i<animationCurvePattern[k].length-1; i++) {
 				curveArray [k].keyframeValues [i] = animationCurvePattern [k].Evaluate (animationCurvePattern [k].keys[i].time)
 					- animationCurvePattern [k].Evaluate (animationCurvePattern [k].keys[0].time);
-			}//相対高度へ変換
+			}//配列１番目からn-1番目を相対高度へ変換
 		}//配列curveの各要素の値確定
 	}
 
