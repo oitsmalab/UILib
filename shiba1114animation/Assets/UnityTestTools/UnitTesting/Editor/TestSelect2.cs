@@ -8,7 +8,6 @@ class TestSelect2
 
 
 
-	public float[] position = {0.3f,0.5f,2.0f};
 
 	[TestCase(2f, 2f)]
 	public void TestGetRelativeHeightsFromAnimationCurvePattern1 (float time, float value)
@@ -57,22 +56,18 @@ class TestSelect2
 	}
 */
 
-/*	[TestCase(position,2)]
-	public void TestMoveAnimation(Vector3 target,int number){
+	[TestCase(2f,0,0,1,0)]
+	public void TestGetAdjustAnimationCurve(float targetposition,float transposition,AnimationCurve[] animationCurvePattern ,int animationNumber,Curve[] curveArray){
 
-		GameObject gameObject;
-		gameObject.transform.position.x = 0;
+		float[] x = { 3f,2f };
 
-		AnimationClip clip = new AnimationClip ();
-		AnimationCurve[] animationCurvePattern = new AnimationCurve[1];
+		AnimationCurve curve = new AnimationCurve ();
 
 		select2 select2Ref = new select2 ();
-		select2.Curve[] curveArray = new select2.Curve[2];
 
-		AnimationCurve curveX =
-			select2Ref.GetAdjustedAnimationCurve(target.x,gameObject.transform.position.x,animationCurvePattern,number,curveArray);
+	 	curve = select2Ref.GetAdjustedAnimationCurve(targetposition,transposition,animationCurvePattern,animationNumber,curveArray);
 
-		Assert.AreEqual(clip.SetCurve("", typeof(Transform), "localPosition.x", curveX) , 1);
+		Assert.AreEqual(curve,x);
 	}
-*/
+
 }
