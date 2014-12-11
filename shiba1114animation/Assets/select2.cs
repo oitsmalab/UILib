@@ -70,7 +70,7 @@ public class select2 : MonoBehaviour {
 	}
 
 
-	public void moveAnimation3 (Vector3 targetPosition ,int animationNumber){
+	public AnimationClip moveAnimation3 (Vector3 targetPosition ,int animationNumber){
 		AnimationClip clip3 = new AnimationClip ();
 		Debug.Log("X");
 		AnimationCurve curveX =
@@ -91,7 +91,8 @@ public class select2 : MonoBehaviour {
 		clip3.SetCurve ("", typeof(Transform), "localPosition.y", curveY);
 		animation.AddClip (clip3, "moveclip3");
 		animation.Play ("moveclip3");
-		
+
+		return clip3;
 	}
 
 	public AnimationCurve GetAdjustedAnimationCurve(float targetPosition,float transformPosition,AnimationCurve[] animationCurvePattern ,int animationNumber ,Curve[] curveArray){
