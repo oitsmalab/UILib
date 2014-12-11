@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 using System.Collections;
-
+using UnityEditor;
 public class TestSelect2 : MonoBehaviour
 {
 		//GetRelativeHeightsFromAnimationCurvePattern　テスト
@@ -48,15 +48,16 @@ public class TestSelect2 : MonoBehaviour
 		select2 select2ref = new select2 ();
 		select2ref.animationCurvePatternZoom[0]  = new AnimationCurve(new Keyframe(0f,0f),new Keyframe(1f,1f),new Keyframe(2f,2f));
 		AnimationClip move3clip = select2ref.moveAnimation3 (position, a_Number);
+
+		//追加　AnimationClipっからAnimationCurveを取得する　
+		AnimationClipCurveData[] allCurves = AnimationUtility.GetAllCurves(move3clip, true);
+
 		//moveanimationメソッド実行
 		//以下、比較用パラメータ作成
-		AnimationClip clip3test = new AnimationClip();
 		AnimationCurve curveZ2 = new AnimationCurve (new Keyframe (0f, 0f), new Keyframe (1f, 1f), new Keyframe (2f, 2f));
-		clip3test.SetCurve ("", typeof(Transform), "localPosition.z", curveZ2);
-		animation.AddClip(clip3test,"moveclip3test");
 
 		//比較
-		Assert.AreEqual (clip3test.frameRate, move3clip.frameRate);						//clip3にセットしたcurveZ2と比較
+		Assert.AreEqual (allCurves[2].curve.keys, curveZ2.keys);						//clip3にセットしたcurveZ2と比較
 		}
 
 	//結果：moveanimation3が「X」のデバッグログしか出してない
