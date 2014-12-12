@@ -16,20 +16,10 @@ public class select2 : MonoBehaviour {
 	Curve[] curveArray = new Curve[4];
 
 	public AnimationCurve[] animationCurvePatternZoom = new AnimationCurve[1];
-	Curve[] curveZoom =new Curve[1];
-
 
 	void Start () {
 		GameObject.Find ("GUI Text").guiText.text = "moveAnimation3 sample";
-
-		GetRelativeHeightsFromAnimationCurvePattern (animationCurvePattern,curveArray);
-
-		if (animationCurvePatternZoom.Length >= 1) {
-						if (animationCurvePatternZoom [0].length >= 2) {
-								GetRelativeHeightsFromAnimationCurvePattern (animationCurvePatternZoom, curveZoom);
-								
-						}
-				}
+		GetRelativeHeightsFromAnimationCurvePattern (animationCurvePattern,curveArray);						
 		Debug.Log (curveArray [0].height+ " firstheight");
 	}
 
@@ -38,7 +28,7 @@ public class select2 : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.RightArrow)){	
 			if(countObject < imageArrays.Length-1){
 				countObject ++;
-				moveAnimation3(imageArrays[countObject].transform.position,moveAnimationPatterns[countObject]);
+				moveAnimation3(imageArrays[countObject].transform.position,moveAnimationPatterns[countObject],gameObject.transform.position,animationCurvePattern,curveArray);
 				Debug.Log (1 +" cnt_"+countObject);
 			}
 		}
@@ -46,7 +36,7 @@ public class select2 : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.LeftArrow)){
 			if(countObject > 0){
 				countObject --;
-				moveAnimation3(imageArrays[countObject].transform.position, moveAnimationPatterns[countObject]);
+				moveAnimation3(imageArrays[countObject].transform.position,moveAnimationPatterns[countObject],gameObject.transform.position,animationCurvePattern,curveArray);
 				Debug.Log (2+" cnt_"+countObject);
 			}
 		}
@@ -70,28 +60,33 @@ public class select2 : MonoBehaviour {
 	}
 
 
-	public AnimationClip moveAnimation3 (Vector3 targetPosition ,int animationNumber){
-		AnimationClip clip3 = new AnimationClip ();
+	public AnimationClip moveAnimation3 (Vector3 targetPosition ,int animationNumber,Vector3 gameObjectPosition,AnimationCurve[] animationCurvePattern,Curve[] curveArray){
 		Debug.Log("X");
-		AnimationCurve curveX =
-			GetAdjustedAnimationCurve(targetPosition.x,gameObject.transform.position.x,animationCurvePattern,animationNumber,curveArray);
+		/*Debug.Log ("1: " + targetPosition);
+		Debug.Log ("2: " + animationNumber);
+		Debug.Log ("3: " + gameObjectPosition);
+		Debug.Log ("4: " + animationCurvePattern);
+		Debug.Log ("5: " + curveArray);
+		*/
+		AnimationCurve curveX = GetAdjustedAnimationCurve(targetPosition.x,gameObjectPosition.x,animationCurvePattern,animationNumber,curveArray);
 
 		Debug.Log("Y");
 		AnimationCurve curveY =
-			GetAdjustedAnimationCurve(targetPosition.y,gameObject.transform.position.y,animationCurvePattern,animationNumber,curveArray);
+			GetAdjustedAnimationCurve(targetPosition.y,gameObjectPosition.y,animationCurvePattern,animationNumber,curveArray);
 
 		Debug.Log ("Z");
 		AnimationCurve curveZ = animationCurvePatternZoom [0];
-			//GetAdjustedAnimationCurve (targetPosition.z - 2, gameObject.transform.position.z, animationCurvePatternZoom, 0, curveZoom);
-			clip3.SetCurve ("", typeof(Transform), "localPosition.z", curveZ);
+
+		AnimationClip clip3 = new AnimationClip ();
+		clip3.SetCurve ("", typeof(Transform), "localPosition.z", curveZ);
 	
 		Debug.Log("Curvechanged");
-
 		clip3.SetCurve ("", typeof(Transform), "localPosition.x", curveX);
 		clip3.SetCurve ("", typeof(Transform), "localPosition.y", curveY);
-		animation.AddClip (clip3, "moveclip3");
-		animation.Play ("moveclip3");
+		//animation.AddClip (clip3, "moveclip3");
+		//animation.Play ("moveclip3");  //引数としてclip3を返す場合は記述出来ない,テスト用のためにコメント化している
 
+		Debug.Log("moveAnimation3END");
 		return clip3;
 	}
 
