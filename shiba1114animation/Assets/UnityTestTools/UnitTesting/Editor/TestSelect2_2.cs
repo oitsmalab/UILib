@@ -12,29 +12,27 @@ public class TestSelect2_2 : MonoBehaviour
 	}
 
 
-	[TestCase(2f,0f,0)]
+	[TestCase(2f,0f,2)]
 	public void TestGetAdjustAnimationCurve(float targetposition,float transposition,int animationNumber){
 
 		select2 select2Ref = new select2 ();
 
-		select2.Curve[] curveArray = new select2.Curve[animationNumber];
+		select2.Curve[] curveArray = new select2.Curve[animation+1];
 
-		curveArray[animationNumber].height = 1f;
-		curveArray[animationNumber].keyframeValues = new float[3];
-		curveArray[animationNumber].keyframeValues[0] = 0f;
-		curveArray[animationNumber].keyframeValues[1] = 0.5f;
-		curveArray[animationNumber].keyframeValues[2] = 0f;
+		curveArray[0].height = 1f;
+		curveArray[0].keyframeValues = new float[animationNumber + 1];
+		curveArray[0].keyframeValues[0] = 0f;
+		curveArray[0].keyframeValues[1] = 0.5f;
+		curveArray[0].keyframeValues[2] = 0f;
 
-		AnimationCurve[] animationCurvePattern = new AnimationCurve[animationNumber];
+		AnimationCurve[] animationCurvePattern = new AnimationCurve[4];
 
-		animationCurvePattern[animationNumber] =  new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1f, 1f), new Keyframe(2f, 2f));
+		animationCurvePattern[0] =  new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1f, 1f), new Keyframe(2f, 2f));
 
-		AnimationCurve curve = new AnimationCurve ();
+		AnimationCurve curve1 = new AnimationCurve ();
 
-		curve.keys = animationCurvePattern[animationNumber].keys;
+	 	curve1 = select2Ref.GetAdjustedAnimationCurve(targetposition,transposition,animationCurvePattern,animationNumber,curveArray);
 
-	 	curve = select2Ref.GetAdjustedAnimationCurve(targetposition,transposition,animationCurvePattern,animationNumber,curveArray);
-
-		Assert.AreEqual(curve.Evaluate(curve.keys[animationNumber].time),1f);
+		Assert.AreEqual(curve1.Evaluate(curve1.keys[1].time),1.0f);
 	}
 }
